@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flower Order Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .container {
+            background: white;
+            width: 340px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #e83e8c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #c82362;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Flower Order Calculator</h2>
+
+    <input type="text" id="customerName" placeholder="Enter your name">
+
+    <label>Flower Type</label>
+    <select id="flowerType">
+        <option value="">Select flower</option>
+        <option value="Rose|5">Rose ($5)</option>
+        <option value="Tulip|4">Tulip ($4)</option>
+        <option value="Lily|6">Lily ($6)</option>
+    </select>
+
+    <label>Quantity</label>
+    <input type="number" id="quantity" placeholder="Enter quantity">
+
+    <label>
+        <input type="checkbox" id="wrap">
+        Gift Wrap ($3)
+    </label>
+
+    <button onclick="calculateFlowerOrder()">Calculate Order</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function calculateFlowerOrder() {
+        const name = document.getElementById("customerName").value;
+        const flowerValue = document.getElementById("flowerType").value;
+        const quantity = Number(document.getElementById("quantity").value);
+        const giftWrap = document.getElementById("wrap").checked;
+
+        // Input validation
+        if (name === "" || flowerValue === "" || quantity <= 0) {
+            document.getElementById("result").innerHTML =
+                "<span style='color:red'>Please fill all fields correctly!</span>";
+            return;
+        }
+
+        const flowerData = flowerValue.split("|");
+        const flowerName = flowerData[0];
+        const flowerPrice = Number(flowerData[1]);
+
+        const wrapPrice = giftWrap ? 3 : 0;
+        const totalPrice = (flowerPrice * quantity) + wrapPrice;
+
+        document.getElementById("result").innerHTML =
+            `Customer: ${name}<br>
+             Flower: ${flowerName}<br>
+             Price per flower: $${flowerPrice}<br>
+             Quantity: ${quantity}<br>
+             Gift Wrap: ${giftWrap ? "Yes" : "No"}<br>
+             <hr>
+             Total Price: $${totalPrice}`;
+    }
+</script>
+
+</body>
+</html> 
